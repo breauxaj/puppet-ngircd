@@ -5,9 +5,19 @@ class ngircd {
 
   package { $required: ensure => latest }
 
-  add_group { 'ngircd': gid => 194 }
+  group { 'ngircd':
+    ensure => present,
+    gid    => 194,
+  }
 
-  add_service { 'ngircd': gid => 194, groups => '', uid => 194 }
+  user { 'ngircd':
+    ensure     => present,
+    gid        => 194,
+    home       => '/var/lib/ngircd',
+    shell      => '/sbin/nologin',
+    managehome => true,
+    uid        => 194,
+  }
 
 }
 
