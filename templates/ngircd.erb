@@ -95,6 +95,7 @@ PidFile = /var/run/ngircd/ngircd.pid
 	# maximum nick name length!
 	;MaxNickLength = 9
 
+<% if @operators and ! @operators.empty? -%>
 [Operator]
 	# [Operator] sections are used to define IRC Operators. There may be
 	# more than one [Operator] block, one for each local operator.
