@@ -9,16 +9,15 @@ Info = <%= global_info %>
 <% if @global_password and ! @global_password.empty? -%>
 Password = <%= global_password %>
 <% end -%>
-
-
-	# Information about the server and the administrator, used by the
-	# ADMIN command. Not required by server but by RFC!
-	;AdminInfo1 = Description
-	;AdminInfo2 = Location
-	;AdminEMail = admin@irc.server
-
-
-	
+<% if @global_admininfo1 and ! @global_admininfo1.empty? -%>
+AdminInfo1 = <%= global_admininfo1 %>
+<% end -%>
+<% if @global_admininfo2 and ! @global_admininfo2.empty? -%>
+AdminInfo2 = <%= global_admininfo2 %>
+<% end -%>
+<% if @global_adminemail and ! @global_adminemail.empty? -%>
+AdminEMail = <%= global_adminemail %>
+<% end -%>
 <% if @global_ports and ! @global_ports.empty? -%>
 Ports = <%= global_ports.join(",") %>
 <% end -%>
@@ -41,14 +40,9 @@ ServerGID = <%= global_servergid %>
 <% else -%>
 ServerGID = ngircd
 <% end -%>
-
-	# A directory to chroot in when everything is initialized. It
-	# doesn't need to be populated if ngIRCd is compiled as a static
-	# binary. By default ngIRCd won't use the chroot() feature.
-	# ATTENTION: For this to work the server must have been started
-	# with root privileges!
-	;ChrootDir = /var/empty
-
+<% if @global_chrootdir and ! @global_chrootdir.empty? -%>
+ChrootDir = <%= global_chrootdir %>
+<% end -%>	
 <% if @global_pidfile and ! @global_pidfile.empty? -%>
 PidFile = <%= global_pidfile %>
 <% else -%>
