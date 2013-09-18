@@ -48,18 +48,15 @@ PidFile = <%= global_pidfile %>
 <% else -%>
 PidFile = /var/run/ngircd/ngircd.pid
 <% end -%>
-
-	# After <PingTimeout> seconds of inactivity the server will send a
-	# PING to the peer to test whether it is alive or not.
-	;PingTimeout = 120
-
-	# If a client fails to answer a PING with a PONG within <PongTimeout>
-	# seconds, it will be disconnected by the server.
-	;PongTimeout = 20
-
-	# The server tries every <ConnectRetry> seconds to establish a link
-	# to not yet (or no longer) connected servers.
-	;ConnectRetry = 60
+<% if @global_pingtimeout and ! @global_pingtimeout.empty? -%>
+PingTimeout = <%= global_pingtimeout %>
+<% end -%>
+<% if @global_pongtimeout and ! @global_pongtimeout.empty? -%>
+PongTimeout = <%= global_pongtimeout %>
+<% end -%>
+<% if @global_connectretry and ! @global_connectretry.empty? -%>
+ConnectRetry = <%= global_connectretry %>
+<% end -%>
 
 	# Should IRC Operators be allowed to use the MODE command even if
 	# they are not(!) channel-operators?
@@ -97,20 +94,29 @@ PidFile = /var/run/ngircd/ngircd.pid
 
 <% if @operators and ! @operators.empty? -%>
 [Operator]
-	# [Operator] sections are used to define IRC Operators. There may be
-	# more than one [Operator] block, one for each local operator.
+<% @operators.sort_by {|key, value| key}.each do |key, value| -%>
+Name = <%= value['oper_name'] %>
+Password = <%= value['oper_pass'] %>
+<% if value['oper_mask'] %>
+Mask = <%= value['oper_mask'] %>
+<% end -%>
+<% end -%>
+<% end -%>
 
-	# ID of the operator (may be different of the nick name)
-	;Name = TheOper
+<% if @servers and ! @servers.empty? -%>
+[Server]
+<% @servers.sort_by {|key, value| key}.each do |key, value| -%>
+Name = <%= value['server_name'] %>
+Host = <%= value['server_host'] %>
+Bind = <%= value['server_bind'] %>
+Port = <%= value['server_port'] %>
 
-	# Password of the IRC operator
-	;Password = ThePwd
 
-	# Optional Mask from which /OPER will be accepted
-	;Mask = *!ident@somewhere.example.com
+Group = <%= value['server_group'] %>
+Passive = <%= value['server_passive'] %>
+<% end -%>
+<% end -%>
 
-[Operator]
-	# More [Operator] sections, if you like ...
 
 [Server]
 	# Other servers are configured in [Server] sections. If you
@@ -159,9 +165,6 @@ PidFile = /var/run/ngircd/ngircd.pid
 	# a port an use the IRC command CONNECT more easily to manually connect
 	# this specific server later.
 	;Passive = no
-
-[Server]
-	# More [Server] sections, if you like ...
 
 [Channel]
 	# Pre-defined channels can be configured in [Channel] sections.
