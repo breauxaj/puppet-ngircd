@@ -1,76 +1,74 @@
 # MANAGED BY PUPPET!
 [Global]
 <% if @global_name and ! @global_name.empty? -%>
-Name = <%= global_name %>
+Name = <%= @global_name %>
 <% end -%>
 <% if @global_info and ! @global_info.empty? -%>
-Info = <%= global_info %>
+Info = <%= @global_info %>
 <% end -%>
 <% if @global_password and ! @global_password.empty? -%>
-Password = <%= global_password %>
+Password = <%= @global_password %>
 <% end -%>
 <% if @global_admininfo1 and ! @global_admininfo1.empty? -%>
-AdminInfo1 = <%= global_admininfo1 %>
+AdminInfo1 = <%= @global_admininfo1 %>
 <% end -%>
 <% if @global_admininfo2 and ! @global_admininfo2.empty? -%>
-AdminInfo2 = <%= global_admininfo2 %>
+AdminInfo2 = <%= @global_admininfo2 %>
 <% end -%>
 <% if @global_adminemail and ! @global_adminemail.empty? -%>
-AdminEMail = <%= global_adminemail %>
+AdminEMail = <%= @global_adminemail %>
 <% end -%>
 <% if @global_ports and ! @global_ports.empty? -%>
-Ports = <%= global_ports.join(",") %>
+Ports = <%= [@global_ports].join(",") %>
 <% end -%>
 <% if @global_listen and ! @global_listen.empty? -%>
-Listen = <%= global_listen.join(",") %>
+Listen = <%= [@global_listen].join(",") %>
 <% end -%>
 <% if @global_motdfile and ! @global_motdfile.empty? -%>
-MotdFile = <%= global_motdfile %>
+MotdFile = <%= @global_motdfile %>
 <% end -%>
 <% if @global_motdphrase and ! @global_motdphrase.empty? -%>
-MotdPhrase = "<%= global_motdphrase.slice! 256..-1 %>"
+MotdPhrase = "<%= [@global_motdphrase].slice! 256..-1 %>"
 <% end -%>	
 <% if @global_serveruid and ! @global_serveruid.empty? -%>
-ServerUID = <%= global_serveruid %>
+ServerUID = <%= @global_serveruid %>
 <% else -%>
 ServerUID = ngircd
 <% end -%>
 <% if @global_servergid and ! @global_servergid.empty? -%>
-ServerGID = <%= global_servergid %>
+ServerGID = <%= @global_servergid %>
 <% else -%>
 ServerGID = ngircd
 <% end -%>
 <% if @global_chrootdir and ! @global_chrootdir.empty? -%>
-ChrootDir = <%= global_chrootdir %>
+ChrootDir = <%= @global_chrootdir %>
 <% end -%>	
 <% if @global_pidfile and ! @global_pidfile.empty? -%>
-PidFile = <%= global_pidfile %>
+PidFile = <%= @global_pidfile %>
 <% else -%>
 PidFile = /var/run/ngircd/ngircd.pid
 <% end -%>
 <% if @global_pingtimeout and ! @global_pingtimeout.empty? -%>
-PingTimeout = <%= global_pingtimeout %>
+PingTimeout = <%= @global_pingtimeout %>
 <% end -%>
 <% if @global_pongtimeout and ! @global_pongtimeout.empty? -%>
-PongTimeout = <%= global_pongtimeout %>
+PongTimeout = <%= @global_pongtimeout %>
 <% end -%>
 <% if @global_connectretry and ! @global_connectretry.empty? -%>
-ConnectRetry = <%= global_connectretry %>
+ConnectRetry = <%= @global_connectretry %>
 <% end -%>
-
-	# Should IRC Operators be allowed to use the MODE command even if
-	# they are not(!) channel-operators?
-	;OperCanUseMode = no
-
-	# Mask IRC Operator mode requests as if they were coming from the
-	# server? (This is a compatibility hack for ircd-irc2 servers)
-	;OperServerMode = no
-
-	# Allow Pre-Defined Channels only (see Section [Channels])
-	;PredefChannelsOnly = no
-
-	# Don't do any DNS lookups when a client connects to the server.
-	;NoDNS = no
+<% if @global_opercanusemode and ! @global.opercanusemode.empty? -%>
+OperCanUseMode <%= @global_opercanusemode %>
+<% end -%>
+<% if @global_operservermode and ! @global_operservermode.empty? -%>
+OperServerMode = <%= @global_operservermode %>
+<% end -%>
+<% if @global_predefchannelsonly and ! @global_predefchannelsonly.empty? -%>
+PredefChannelsOnly = <%= @global_predefchannelsonly %>
+<% end -%>
+<% if @global_nodns and ! @global_nodns.empty? -%>
+NoDNS = <%= @global_nodns %>
+<% end -%>
 
 	# try to connect to other irc servers using ipv4 and ipv6, if possible
 	;ConnectIPv6 = yes
