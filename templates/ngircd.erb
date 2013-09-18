@@ -110,86 +110,30 @@ Name = <%= value['server_name'] %>
 Host = <%= value['server_host'] %>
 Bind = <%= value['server_bind'] %>
 Port = <%= value['server_port'] %>
-
-
+<% if value['server_mypassword'] -%>
+MyPassword = <%= value['server_mypassword'] %>
+<% end -%>
+<% if value['server_peerpassword'] -%>
+PeerPassword = <%= value['server_peerpassword'] %>
+<% end -%>
+<% if value['server_group'] -%>
 Group = <%= value['server_group'] %>
+<% end -%>
 Passive = <%= value['server_passive'] %>
 <% end -%>
 <% end -%>
 
-
-[Server]
-	# Other servers are configured in [Server] sections. If you
-	# configure a port for the connection, then this ngircd tries to
-	# connect to to the other server on the given port; if not it waits
-	# for the other server to connect.
-	# There may be more than one server block, one for each server.
-	#
-	# Server Groups:
-	# The ngIRCd allows "server groups": You can assign an "ID" to every
-	# server with which you want this ngIRCd to link. If a server of a
-	# group won't answer, the ngIRCd tries to connect to the next server
-	# in the given group. But the ngircd never tries to connect to two
-	# servers with the same group ID.
-
-	# IRC name of the remote server, must match the "Name" variable in
-	# the [Global] section of the other server (when using ngIRCd).
-	;Name = irc2.the.net
-  
-	# Internet host name or IP address of the peer (only required when
-	# this server should establish the connection).
-	;Host = connect-to-host.the.net
-
-	# IP address to use as _source_ address for the connection. if unspecified,
-	# ngircd will let the operating system pick an address.
-	;Bind = 10.0.0.1
-
-	# Port of the server to which the ngIRCd should connect. If you
-	# assign no port the ngIRCd waits for incoming connections.
-	;Port = 6667
-
-	# Own password for the connection. This password has to be configured
-	# as "PeerPassword" on the other server.
-	;MyPassword = MySecret
-
-	# Foreign password for this connection. This password has to be
-	# configured as "MyPassword" on the other server.
-	;PeerPassword = PeerSecret
-
-	# Group of this server (optional)
-	;Group = 123
-
-	# Set the "Passive" option to "yes" if you don't want this ngIRCd to
-	# connect to the configured peer (same as leaving the "Port" variable
-	# empty). The advantage of this option is that you can actually configure
-	# a port an use the IRC command CONNECT more easily to manually connect
-	# this specific server later.
-	;Passive = no
-
+<% if @channels and ! @channels.empty? -%>
 [Channel]
-	# Pre-defined channels can be configured in [Channel] sections.
-	# Such channels are created by the server when starting up and even
-	# persist when there are no more members left.
-	# Persistent channels are marked with the mode 'P', which can be set
-	# and unset by IRC operators like other modes on the fly.
-	# There may be more than one [Channel] block, one for each channel.
-
-	# Name of the channel
-	;Name = #TheName
-
-	# Topic for this channel
-	;Topic = a great topic
-
-	# Initial channel modes
-	;Modes = tnk
-
-	# initial channel password (mode k)
-	;Key = Secret
-
-	# maximum users per channel (mode l)
-	;MaxUsers = 23
-
-[Channel]
-	# More [Channel] sections, if you like ...
-
-# -eof-
+<% @channels.sort_by {|key, value| key}.each do |key, value| -%>
+Name = <%= value['channel_name'] %>
+Topic = <%= value['channel_topic'] %>
+Modes = <%= value['channel_modes'] %>
+<% if value['channel_key'] -%>
+Key = <%= value['channel_key'] %>
+<% end -%>
+<% if value['channel_maxusers'] %>
+MaxUsers = <%= value['channel_maxusers'] %>
+<% end -%>
+<% end -%>
+<% end -%>
