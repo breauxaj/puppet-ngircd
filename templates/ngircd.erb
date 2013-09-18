@@ -69,26 +69,24 @@ PredefChannelsOnly = <%= @global_predefchannelsonly %>
 <% if @global_nodns and ! @global_nodns.empty? -%>
 NoDNS = <%= @global_nodns %>
 <% end -%>
-
-	# try to connect to other irc servers using ipv4 and ipv6, if possible
-	;ConnectIPv6 = yes
-	;ConnectIPv4 = yes
-
-	# Maximum number of simultaneous connection the server is allowed
-	# to accept (0: unlimited):
-	;MaxConnections = 0
-
-	# Maximum number of simultaneous connections from a single IP address
-	# the server will accept (0: unlimited):
-	;MaxConnectionsIP = 5
-
-	# Maximum number of channels a user can be member of (0: no limit):
-	;MaxJoins = 10
-
-	# Maximum length of an user nick name (Default: 9, as in RFC 2812).
-	# Please note that all servers in an IRC network MUST use the same
-	# maximum nick name length!
-	;MaxNickLength = 9
+<% if @global_connectipv6 and ! @global_connectipv6.empty? -%>
+ConnectIPv6 = <%= @global_connectipv6 %>
+<% end -%>
+<% if @global_connectipv4 and ! @global_connectipv4.empty? -%>
+ConnectIPv4 = <%= @global_connectipv4 %>
+<% end -%>
+<% if @global_maxconnections and ! @global_maxconnections.empty? -%>
+MaxConnections = <%= @global_maxconnections %>
+<% end -%>
+<% if @global_maxconnectionsip and ! @global_maxconnectionsip.empty? -%>
+MaxConnectionsIP = <%= @global_maxconnectionsip %>
+<% end -%>
+<% if @global_maxjoins and ! @global_maxjoins.empty? -%>
+MaxJoins = <%= @global_maxjoins %>
+<% end -%>
+<% if @global_maxnicklength and ! @global_maxnicklength.empty? -%>
+MaxNickLength = <%= @global_maxnicklength %>
+<% end -%>
 
 <% if @operators and ! @operators.empty? -%>
 [Operator]
