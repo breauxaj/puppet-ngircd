@@ -28,7 +28,15 @@ $operators = {
 Define the servers array
 ```
 $servers = {
-  s1 => { server_name => }
+  s1 => { server_name => '',
+          server_host => '',
+          server_bind => '',
+          server_port => '',
+          server_mypassword => '',
+          server_peerpassword => '',
+          server_group => '',
+          server_passive => '',
+        }
 }
 ```
 Define the channels array
