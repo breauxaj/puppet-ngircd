@@ -12,12 +12,26 @@ include ngircd
 ```
 ngircd::service { 'default': ensure => running, enable => true }
 ```
-
+Define the operators array
 ```
-$servers {
+$operators = {
+  o1 => { oper_name => 'john',
+          oper_pass => 'pass123',
+          oper_mask => '',
+        },
+  o2 => { oper_name => 'nancy',
+          oper_pass => '123pass',
+          oper_mask => '',
+        },
+}
+```
+Define the servers array
+```
+$servers = {
   s1 => { server_name => }
 }
 ```
+Define the channels array
 ```
 $channels = {
   c1 => { channel_name => '#sample',
