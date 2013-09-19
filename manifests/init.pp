@@ -61,8 +61,19 @@ define ngircd::config ( $global_name,
                         $global_maxconnectionsip,
                         $global_maxjoins,
                         $global_maxnicklength,
+                        $operators,
+                        $servers,
+                        $channels ) {
+  $service = $operatingsystem ? {
+    /(?i-mx:centos|fedora|redhat|scientific)/ => 'ngircd',
+  }
 
-
-) {
-
+  file { '/etc/ngircd.conf':
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('ngircd/ngircd.erb'),
+    notify  => Service[$service],
+  }
 }
